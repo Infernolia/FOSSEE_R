@@ -216,3 +216,10 @@ length(colnames(df))
 
 
 length(colnames(df_text))
+
+                       
+#finally lets save this cleaned dataframe in a csv file
+write.csv(df,"C:/Users/Aboli/Desktop/FOSSEE/Code/cleaned.csv")
+                       
+                       
+                       
