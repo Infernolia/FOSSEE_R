@@ -200,6 +200,8 @@ na_count <-sapply(df, function(y) sum(length(which(is.na(y)))))
 na_count <- data.frame(na_count)
 na_count
 
+View(df)
+
 
 
 #Reversing the order for all negative questions
