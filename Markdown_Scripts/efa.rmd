@@ -1,0 +1,126 @@
+---
+title: "Exploratory Factor Analysis for R Workshop Survey Data"
+author: "Aboli Marathe"
+output: html_document
+---
+
+# Part 1: Setting up Environment
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+
+#install.packages("psych")
+library("psych")
+#install.packages("GPArotation")
+library("GPArotation")
+```
+
+
+# Part 2: Loading Dataset for Analysis
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+# Reading Cleaned Data from csv or xls
+setwd("C:/Users/Aboli/Desktop/FOSSEE/Code")
+df <- read.csv("cleaned_overall.csv")
+df <- subset(df,select = -c(1))
+df <- data.frame(apply(df, 2, function(x) as.numeric(as.character(x))))
+length(colnames(df))
+head(df)
+```
+
+
+# Part 3: Detecting and Removing Outliers
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+#Calculating the mahalnobis values
+mh_val = mahalanobis(df, colMeans(df, na.rm = T),cov(df, use = "pairwise.complete.obs"))
+
+#cutoff score
+cutoff = qchisq(1-.001, ncol(df))
+cutoff
+
+#Finding the number of outliers
+summary(mh_val < cutoff)
+
+#Removing outliers
+noout = subset(df, mh_val < cutoff)
+head(noout)
+```
+
+# Part 4: Correlation Analysis
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+#Additivity test
+corr_df = cor(df,use = "pairwise.complete.obs")
+corr_df
+```
+
+
+# Part 5: Fake Regression Analysis
+## Running the fake regression and creating standardized residuals. Creating the fitted values.
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+#Fake regression analysis
+random = rchisq(nrow(df), 7) 
+fake = lm(random~., data = df)
+standardized = rstudent(fake)
+fitted = scale(fake$fitted.values)
+```
+
+## Normality test
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+#normality
+myplot <- hist(standardized)
+myplot
+
+```
+
+## Linearity test
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+#linearity
+myplot <-qqnorm(standardized)
+abline(0,1)
+myplot
+```
+
+## Homogeneity and Homoscedasticity test
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+#homogeneity
+myplot <- plot(fitted,standardized)
+abline(0,0)
+abline(v = 0)
+myplot
+```
+
+# Part 6: Bartlett and KMO test
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+#Bartlett test
+correl = cor(df, use = "pairwise.complete.obs")
+cortest.bartlett(correl, n = nrow(df))
+
+
+#KMO test
+KMO(correl)
+
+```
+
+# Part 7: Factor analysis
+## Determining ideal number of factors  for fa using Scree plot, old and new Kaiser Criterion.
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+
+#the elbow in scree  plot shows how many factors are needed
+nofactors = fa.parallel(noout, fm="ml", fa="fa")
+
+#Kaiser criterion
+sum(nofactors$fa.values > 1.0) ##old kaiser criterion
+sum(nofactors$fa.values > .7) ##new kaiser criterion
+```
+
+
+## Conducting and visualizing factors.
+```{r echo=TRUE,  fig.height=32, fig.width=20,message=FALSE, warning=FALSE}
+
+#Factor analysis using maximum likelihood
+round1 = fa(noout, nfactors=2, rotate = "oblimin", fm = "ml")
+round1
+
+# Rotation is set to promax
+factanal(noout, factors = 2, rotation = "promax")
+
+#visualize the factors
+fa.diagram(round1)
+```
