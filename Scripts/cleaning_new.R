@@ -2,7 +2,9 @@
 library("descr")
 
 # Reading Data from csv or xls
-df <- read.csv("C:/Users/Aboli/Desktop/FOSSEE/Code/data.csv")
+setwd("C:/Users/Aboli/Desktop/FOSSEE/Code")
+df <- read.csv("data.csv")
+
 
 # Changing the column names to more relevant, shorter names
 colnames(df) <- c("Name", 
@@ -87,34 +89,34 @@ colnames(df) <- c("Name",
                   "Interesting activity", 
                   "Other Suggestion")
 
-# Cleaning the age column
-
-df$Age <- apply(as.data.frame(df$Age),1,function(x){substr(x, start = 1, stop = 2)})
-
-#Number of unique rows
-sum(!duplicated(df))
 
 #Making the unique id
 df$Id <- paste0("" , as.integer(rownames(df)))
-df_text$Id <- paste0("" , as.integer(rownames(df_text)))
-
-
 
 #Bringing Id as the first column
 df <- df[,c(82,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81)]
 
+
+
 #Now that we have IDed the survey participants we can remove the names to ensure privacy of participants
 df <- subset(df, select = -c(2,3) )
-
-#Cleaning the R_Workshop_Experience__Yes__Number_of_Days_Attended___No__0_days column
-df$`Pre training duration` <- gsub("[^0-9.-]", "", df$`Pre training duration`)
-df[df$`Pre training duration`=="2-4", "Pre training duration"] <- 3
 
 #Let's separate the columns that have text based answers into a new dataframe called df_text and remove them from the original dataframe
 df_text <- subset(df, select = c(4,5,7,8,9,11,12,13,14,36,64,65,69,75,79,80) )
 df <- subset(df, select = -c(4,5,7,8,9,11,12,13,14,36,64,65,69,75,79,80) )
 
 
+
+df$Age <- apply(as.data.frame(df$Age),1,function(x){substr(x, start = 1, stop = 2)})
+
+#Number of unique rows
+sum(!duplicated(df))
+
+
+
+#Cleaning the R_Workshop_Experience__Yes__Number_of_Days_Attended___No__0_days column
+df$`Pre training duration` <- gsub("[^0-9.-]", "", df$`Pre training duration`)
+df[df$`Pre training duration`=="2-4", "Pre training duration"] <- 3
 
 #Now we will only be working with the numerical data
 #Note: Extensive analysis can include NLP for the text-based data ;)
@@ -131,9 +133,6 @@ df$`Software other than R` <- ifelse(df$`Software other than R`=="Yes", 5, 1)
 df[df$`Using R in institute`=="Yes", "Using R in institute"] <- 5
 df[df$`Using R in institute`=="Not sure","Using R in institute"] <- 3
 df[df$`Using R in institute`=="No", "Using R in institute"] <- 1
-
-View(df)
-
 
 
 #There are some columns which contain rating followed by unnecessary text. We will extract only numeric rating from it.
@@ -199,6 +198,7 @@ df$`Answered question on spoken tutorial forum` <- ifelse(df$`Answered question 
 na_count <-sapply(df, function(y) sum(length(which(is.na(y)))))
 na_count <- data.frame(na_count)
 na_count
+
 
 View(df)
 
