@@ -1,0 +1,38 @@
+---
+title: "cfa1"
+output: html_document
+---
+
+```{r echo=TRUE, fig.height=30, fig.width=40, message=FALSE, warning=FALSE}
+
+#install.packages("psych")
+library("psych")
+#install.packages("GPArotation")
+library("GPArotation")
+#install.packages("lavaan")
+library("lavaan")
+#install.packages("semPlot")
+library("semPlot")
+
+setwd("C:/Users/Aboli/Desktop/FOSSEE/Code")
+df <- read.csv("cleaned_spoken.csv")
+df <- subset(df,select = -c(1))
+df <- data.frame(apply(df, 2, function(x) as.numeric(as.character(x))))
+
+t <- c(paste("a",1:length(colnames(df)), sep = ""))
+
+colnames(df) <- t
+
+
+hz.model <- '
+st =~   a1 + a4 + a19 + a20 + a21 + a22 + a23 + a24 + a25 + a26 + a27 + a28 + a29
+negat =~  a2 + a3
+howto =~  a5 + a6 + a7 + a8 + a9 + a10 + a11 + a12 + a13 + a14 + a15'
+
+hz.fit <- cfa(hz.model, data=df)
+summary(hz.fit, standardized=TRUE)
+
+#semPlot::semPaths(hz.fit)
+
+semPlot::semPaths(hz.fit, "std")
+```
