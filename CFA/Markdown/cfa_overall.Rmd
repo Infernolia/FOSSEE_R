@@ -1,0 +1,127 @@
+---
+title: "CFA Analysis of  Overall Feedback"
+author: "Aboli Marathe"
+output: html_document
+---
+
+# Part 1: Setting up Environment
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+
+#install.packages("lavaan")
+library("lavaan")
+#install.packages("semPlot")
+library("semPlot")
+library("knitr")
+library("ggplot2")
+library("car")
+```
+
+# Part 2: Data Loading and Processing
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+setwd("C:/Users/Aboli/Desktop/FOSSEE/Code")
+df <- read.csv("cleaned_overall.csv")
+df <- subset(df,select = -c(1))
+df <- data.frame(apply(df, 2, function(x) as.numeric(as.character(x))))
+#Renaming column names because they look messy in the diagram
+t <- c(paste("a",1:length(colnames(df)), sep = ""))
+colnames(df) <- t
+head(df)
+```
+
+# Part 3: Define  model
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+#So we need to create the model and pass our features to it. Here we are fitting it to a simple structure using our general knowledge. 
+wisc.model1 <- '
+positive =~   a1 + a2 + a3 + a4 + a5 + a7 + a8 + a10  + a11 + a12
+negative =~     a6 +  a9  +  a13 + a14 + a15'
+
+```
+
+# Part 4: Fitting model
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+fit1 <- lavaan::cfa(wisc.model1, df,std.lv=TRUE)
+summary(fit1, fit.measures=T,standardized=T)
+```
+
+# Part 5: Obtain coefficients
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+# obtain only the coefficients
+kable(coef(fit1), booktabs=TRUE, format="markdown")
+
+```
+
+# Part 6: Complete parameter listing
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+parameterEstimates(fit1,standardized=T)
+
+```
+
+
+
+# Part 7: Residuals correlation matrix
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+cor_table <- residuals(fit1, type = "cor")$cov
+#cor_table[upper.tri(cor_table)] <- # erase the upper triangle
+#diag(cor_table) <- NA # erase the diagonal 0's
+knitr::kable(cor_table, digits=3,format="markdown", booktabs=TRUE) # makes a nice table and rounds ever
+```
+
+# Part 8: Plot the residuals
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+# extract the residuals from the fit1 model
+# get rid of the duplicates and diagonal values
+# create a vector for a
+res1 <- residuals(fit1, type = "cor")$cov
+res1[upper.tri(res1,diag=T)] <- NA
+v1 <- as.vector(res1)
+v2 <- v1[!is.na(v1)]
+qqPlot(v2,id=F)
+```
+
+# Part 9: Modification Indices
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+kable(modificationIndices(fit1, sort.=TRUE, minimum.value=3), booktabs=TRUE, format="markdown")
+
+```
+
+
+# Part 10: Path Diagram for the bifactor Model 1
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+# Note that the base plot, including standardized path coefficients plots positive coefficients green
+# and negative coefficients red. Red-green colorblindness issues anyone?
+# I redrew it here to choose a blue and red. But all the coefficients in this example are
+# positive,so they are shown with the skyblue.
+# more challenging to use colors other than red and green. not in this doc
+semPaths(fit1, residuals=F,sizeMan=7,"std",
+posCol=c("skyblue4", "red"),
+#edge.color="skyblue4",
+edge.label.cex=1.2,layout="circle2")
+
+```
+
+# Part 11: Visualization including residuals
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+# or we could draw the paths in such a way to include the residuals:
+#semPaths(fit1, sizeMan=7,"std",edge.color="skyblue4",edge.label.cex=1,layout="circle2")
+# the base path diagram can be drawn much more simply:
+#semPaths(fit1)
+# or
+semPaths(fit1,"std")
+```
+
+# Part 12:  Orthognal Fit Comparison
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+fit1orth <- lavaan::cfa(wisc.model1, data=df,orthogonal=T)
+kable(anova(fit1,fit1orth), booktabs=TRUE, format="markdown")
+
+```
+
+# Part 13: Results Interpretation
+
+- The features Selective.admission.for.less.crowd.R.,Apply.fee.so.the.crowd.decrease.R. strongly belong to the factor negative feedback.
+- The features Quality.of.instruction, Interacting.with.FOSSEE.team, Overall.exposure, Will.recommend.workshop.for.friend, Happy.with.format strongly belong to the factor positive feedback.
+
+
+
+# References
+Confirmatory Factor Analysis with R A Draft document using lavaan, sem, and OpenMx - Bruce Dudek
