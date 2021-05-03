@@ -1,0 +1,67 @@
+Name,Name
+Institute Name,Institute
+target_audience,Target_Audience
+1A. Your background,Background
+"1B. If your answer to the above question is OTHER, then please specify:",Background_Other
+"2. This question refers to any workshop/training on any Molecular Modelling or 3D Viewers for Chemistry/Biochemistry that you may have attended BEFORE this workshop. Please enter the total number of days of the workshop/training you have undergone before. If you have not gone through any such workshop/training before, please choose 0 days.",Pre_Workshop_Training
+3A. Do you use a 3D Viewers or Molecular Modelling software (other than Jmol Application) in your college/Institute/Organisation?,Using_Software_Other_In_Org
+"3B. If the answer is ""Yes"" for the above question, please mention the name of the software.",Name_Software_Other
+4A. Did you use Jmol Application before you registered for this workshop?,Used_Jmol_before
+"4B. If the answer is ""Yes"" for the above question, in what way did you use. Please select all the relevant options.",Jmol_Use_Purpose
+"5. How difficult it is to teach or learn topics such as Stereochemistry, Isomerism and Point Group WITHOUT the use of a 3D Viewer?",Concept_Difficulty_without_3DViewer
+"6. Is Jmol Application useful in teaching and learning of topics like Stereochemistry, Isomerism and Point Group Classification?",Jmol_Usefulness_For_Concepts
+7. How difficult is it to use Jmol Application in classroom teaching?,Jmol_Difficulty_For_Teaching
+8. Visual depiction of molecules in three dimensional view will create interest in the subject.,3D_Visualization_Interesting
+9A. Which of the given ICT (Information and Communication Technology) tools will you use to improve conceptual understanding of topics in Chemistry/Biochemistry?,ICT_Tools_Will_Utilize
+"9B. If your answer is ""Others"" in the above question. Please give the names of other ICT tools.",ICT_Tools_Will_Utilize_Others
+10. Did you use conventional methods of visualizing molecules such as 2D drawings or handheld 3D plastic or wooden models for teaching/learning structures of molecules? Please write about your experience briefly,Conventional_methods_visualization
+"11. After learning the basics about Jmol Application, which method would you now prefer to use for teaching and learning structures of molecules.",After_Jmol_Which_Method_Prefer
+12. As a teacher will you use Jmol Application in assessment of student learning?,Jmol_Useful_Assessing_Students
+"13. How do you plan to incorporate ICT tools such as Molecular viewers, Virtual Labs, Simulations in online teaching during COVID period?",ICT_Tools_Use_COVID
+"14. If the answer is ""other"" for the above question, please specify.",ICT_Tools_Use_COVID_Other
+"15. Rate your experience in understanding and following spoken tutorials on Jmol Application during the workshop.(Kindly respond using the scale given below, wherein 1 implies ""extremely easy to understand and follow"" and 5 implies ""extremely difficult to understand and follow"".)",ST_Introduction_to_Jmol_Application
+"16. Rate your experience in performing the following the assignments during the workshop.(Kindly respond using the scale given below, wherein 1 implies ""extremely easy"" and 5 implies ""extremely difficult"".)",ST_Create_and_Edit_Molecular Models
+17. How would you rate your level of knowledge of using Jmol Application for 3D Modelling before and after the workshop:,ST_Modify_Display_and_View
+18. How would you rate your knowledge and skills in creating and editing 3D models using Jmol Application before and after the workshop:,ST_Measurements_and_Labeling
+"19. How would you rate your knowledge and skills in measuring bond length, bond angle and dihedral angle in Jmol Application before and after the workshop:",ST_Script_Console_and_Script_Commands
+20. How would you rate your knowledge and skills in creating atomic and molecular orbitals using Jmol Application before and after the workshop:,ST_Surfaces_and_Orbitals
+"21. How would you rate your knowledge and skills in showing center of axis, drawing reflecting planes in Jmol Application before and after the workshop:",ST_Crystal_Structure_and_Unit_Cell
+22. How would you rate your knowledge and skills in showing point groups before and after the workshop:,A1_Introduction_to_Jmol_Application
+23. How would you rate your knowledge and skills in using Script Commands for modifying a 3D model in Jmol Application before and after the workshop:,A2_Create_and_Edit_Molecular_Models
+24. How would you rate your knowledge and skills in displaying Crystal structures in Jmol Application before and after the workshop:,A3_Modify_Display_and_View
+25. Rate the following aspects of the workshop:,A4_Measurements_and_Labelling
+26. Select the response that describes your views/responses:,A5_Script_Console_and_Script_Commands
+27. What aspect(s) did you like most about the workshop?,A6_Surfaces_and_Orbitals
+28. Any suggestions for improvement:,A7_Crystal_Structure_and_Unitcell
+29. Please give your feedback on our forum approach to answer doubts,Jmol_3D_Modelling_Knowledge_Before
+30. How do you hope to use the learnings from this workshop into practice?,Jmol_3D_Modelling_Knowledge_After
+31. Any other feedback,Jmol_3D_Model_Create_Edit_Knowledge_Before
+,Jmol_3D_Model_Create_Edit_Knowledge_After
+,Jmol_Bond_Measure_Knowledge_Before
+,Jmol_Bond_Measure_Knowledge_After
+,Jmol_Orbital_Create_Knowledge_Before
+,Jmol_Orbital_Create_Knowledge_After
+,Jmol_CenterAxis_Knowledge_Before
+,Jmol_CenterAxis_Knowledge_After
+,Jmol_PointGroups_Knowledge_Before
+,Jmol_PointGroups_Knowledge_After
+,Jmol_Script_Cmd_3D_Knowledge_Before
+,Jmol_Script_Cmd_3D_Knowledge_After
+,Jmol_Crystal_Knowledge_Before
+,Jmol_Crystal_Knowledge_After
+,Quality_instructional_material
+,Self_learning_experience
+,Spoken_Tutorial_Forum_experience
+,Online_discussion_session
+,Interaction_with_Teaching_Assistant
+,Quality_Workshop
+,New_Knowledge
+,Unhappy_Format
+,Willing_Participate_Activities
+,Not_Learn_Much
+,Will_Recommend
+,Aspects_Liked
+,Suggestions
+,Forum_Feedback
+,Use_Learnings_Purpose
+,Feedback
